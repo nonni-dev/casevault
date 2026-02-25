@@ -14,9 +14,9 @@ const protest = Dancing_Script({
 const page = async () => {
   const session = await auth()
 
-  if (!session) {
-    redirect("/signin")
-  }
+//  if (!session) {
+  //  redirect("/signin")
+ // }
 
 
   return (

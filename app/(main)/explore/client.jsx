@@ -172,7 +172,7 @@ const Client = ({ session }) => {
                                     cases.map(caseItem => (
                                         <div key={caseItem.id} className="bg-[#233D4C] rounded-xl p-5 shadow-md relative pb-10">
                                             <div className='flex gap-5 items-center mb-5'>
-                                                <Avatar alt={session?.user?.name} src={session?.user?.image} sx={{
+                                                <Avatar alt={caseItem.name} src={caseItem.image} sx={{
                                                     width: { xs: 48, sm: 54, md: 60 },
                                                     height: { xs: 48, sm: 54, md: 60 },
                                                 }} className=' cursor-pointer ' />
