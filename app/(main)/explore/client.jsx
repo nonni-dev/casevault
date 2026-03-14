@@ -26,11 +26,22 @@ const Client = ({ session }) => {
     const [cases, setCases] = useState([])
     const [loading, setLoading] = useState(true)
     const [searchTerm, setSearchTerm] = useState("")
-    const filteredCases = cases.filter((caseItem) =>
-        caseItem.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        caseItem.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        caseItem.category.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredCases =
+        searchTerm.trim() === ""
+            ? cases
+            : cases.filter((caseItem) => {
+                const title = caseItem.title?.toLowerCase() || "";
+                const description = caseItem.description?.toLowerCase() || "";
+                const category = caseItem.category?.toLowerCase() || "";
+
+                const search = searchTerm.toLowerCase();
+
+                return (
+                    title.includes(search) ||
+                    description.includes(search) ||
+                    category.includes(search)
+                );
+            });
 
     useEffect(() => {
         const fetchCases = async () => {
@@ -148,7 +159,7 @@ const Client = ({ session }) => {
                         <input
                             type="text"
                             placeholder="Search cases..."
-                            className="w-full md:w-1/2 border p-3 rounded-lg border-[#233D4C] text-[#233D4C] focus:outline-none focus:ring-1 focus:ring-[#55fff6] focus"
+                            className="w-full md:w-1/2 border p-3 rounded-lg border-[#233D4C] text-[#233D4C] focus:outline-none focus:ring-1 focus:ring-[#55fff6]"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -176,7 +187,7 @@ const Client = ({ session }) => {
                             <span className='flex items-center justify-center gap-1 md:mt-20 mt-10'><LuLoaderCircle className='text-xl animate-spin text-center' /> <p>loading...</p> </span>
                             :
                             <div className="grid md:grid-cols-2 gap-6 lg:grid-cols-3">
-                                {   filteredCases.length === 0 ? (
+                                {filteredCases.length === 0 ? (
                                     <p className='text-gray-300 text-center col-span-full'>No result found for "{searchTerm}"</p>
                                 ) : (
                                     filteredCases.map(caseItem => (
