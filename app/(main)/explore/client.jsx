@@ -148,7 +148,7 @@ const Client = ({ session }) => {
                         <input
                             type="text"
                             placeholder="Search cases..."
-                            className="w-full md:w-1/2 border p-3 rounded-lg border-[#233D4C] text-[#233D4C]"
+                            className="w-full md:w-1/2 border p-3 rounded-lg border-[#233D4C] text-[#233D4C] focus:outline-none focus:ring-1 focus:ring-[#55fff6] focus"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
