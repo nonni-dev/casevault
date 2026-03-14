@@ -173,6 +173,7 @@ const Client = ({ session }) => {
                                     key={cat}
                                     className="px-3 py-2 rounded-full hover:bg-[#F97316] hover:text-[#0F172A] transition
                                     text-[#f5f5f5] md:px-4 bg-[#233D4C] duration-200 transition-all cursor-pointer"
+                                    onClick={() => setSearchTerm(cat === "All" ? "" : cat)}
                                 >
                                     {cat}
                                 </button>
