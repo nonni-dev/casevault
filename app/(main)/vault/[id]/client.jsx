@@ -89,9 +89,8 @@ const Client = ({ session }) => {
   }
 
 
-  if (loading) return <main className="min-h-dvh bg-[#f5f5f5] text-center">
+  if (loading) return
     <p className="text-center mt-20">Loading case...</p>
-  </main> 
 
 
   return (
