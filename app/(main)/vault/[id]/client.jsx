@@ -156,7 +156,7 @@ const Client = ({ session }) => {
         anchorOrigin={{ vertical, horizontal }}
         open={open}
         onClose={handleClose}
-        message="Successfully Submitted!!!"
+        message="Successfully Updated!!!"
         key={vertical + horizontal}
         autoHideDuration={5000}
       />

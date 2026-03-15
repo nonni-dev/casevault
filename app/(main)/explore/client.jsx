@@ -1,14 +1,13 @@
 "use client"
 import React from 'react'
 import { useEffect, useState } from "react"
-import { collection, getDocs, orderBy, query } from "firebase/firestore"
+import { collection, getDocs, orderBy, query, doc, updateDoc } from "firebase/firestore"
 import { db } from "@/config/firebase"
 import { Avatar } from '@mui/material'
 import { Patua_One } from 'next/font/google'
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 import { LuLoaderCircle } from "react-icons/lu";
 import Link from 'next/link'
+import { FaHeart } from "react-icons/fa";
 
 
 const font = Patua_One({
@@ -67,8 +66,6 @@ const Client = ({ session }) => {
     }, [])
 
     console.log(cases);
-
-
     const timeAgo = (timestamp) => {
         if (!timestamp) return ""
 
@@ -95,20 +92,43 @@ const Client = ({ session }) => {
         if (months < 12) return `${months} month${months > 1 ? "s" : ""} ago`
         return `${years} year${years > 1 ? "s" : ""} ago`
     }
-    const [state, setState] = React.useState({
-        open: false,
-        vertical: 'top',
-        horizontal: 'center',
-    });
-    const { vertical, horizontal, open } = state;
+    const toggleLike = async (caseId, likes = []) => {
 
-    const handleClick = (newState) => {
-        setState({ ...newState, open: true });
-    };
+        try {
 
-    const handleClose = () => {
-        setState({ ...state, open: false });
-    };
+            const caseRef = doc(db, "cases", caseId)
+
+            let updatedLikes
+
+            if (likes.includes(uid)) {
+
+                updatedLikes = likes.filter((id) => id !== uid)
+
+            } else {
+
+                updatedLikes = [...likes, uid]
+
+            }
+
+            await updateDoc(caseRef, {
+                likes: updatedLikes
+            })
+
+            setCases(prev =>
+                prev.map(item =>
+                    item.id === caseId
+                        ? { ...item, likes: updatedLikes }
+                        : item
+                )
+            )
+
+        } catch (error) {
+
+            console.error("Error updating like:", error)
+
+        }
+
+    }
 
 
     return (
@@ -196,8 +216,32 @@ const Client = ({ session }) => {
                                             </p>
                                             <Link className='md:text-sm text-xs underline text-red-500' href={`/explore/${caseItem.id}`}>Read more
                                             </Link>
+                                            <div className='flex items-center bottom-3 left-6 absolute'>
+                                                <p className="flex items-center gap-1 mt-3">
 
-                                            <p className="text-xs font-semibold text-gray-400 mt-3 bottom-3 left-4 absolute">
+                                                    {caseItem.likes?.includes(uid) ? (
+
+                                                        <FaHeart
+                                                            className="text-red-500 cursor-pointer"
+                                                            onClick={() => toggleLike(caseItem.id, caseItem.likes)}
+                                                        />
+
+                                                    ) : (
+
+                                                        <FaHeart
+                                                            className="cursor-pointer text-[#f5f5f5]"
+                                                            onClick={() => toggleLike(caseItem.id, caseItem.likes)}
+                                                        />
+
+                                                    )}
+
+                                                    <span className="text-sm text-gray-300">
+                                                        {caseItem.likes?.length || 0}
+                                                    </span>
+
+                                                </p>
+                                            </div>
+                                            <p className="text-xs font-semibold text-gray-400 mt-3  bottom-3 right-4 absolute">
                                                 {timeAgo(caseItem.createdAt)}
                                             </p>
                                         </div>
@@ -206,21 +250,6 @@ const Client = ({ session }) => {
 
                             </div>
                     }
-                    <Snackbar
-                        anchorOrigin={{ vertical, horizontal }}
-                        open={open}
-                        autoHideDuration={5000}
-                        onClose={handleClose}
-                    >
-                        <MuiAlert
-                            onClose={handleClose}
-                            severity=""
-                            variant=""
-                            className='!bg-[#0000] !text-gray-100 font-semibold'
-                        >
-                            Deleted Successfully
-                        </MuiAlert>
-                    </Snackbar>
                 </div>
             </div>
         </main>
