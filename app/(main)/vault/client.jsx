@@ -223,7 +223,7 @@ const Page = ({ session }) => {
                                 {/* Delete Button */}
 
                                 <div className="absolute top-3 right-3 flex items center gap-3">
-                                    <button
+                                    <Link
                                         //onClick={}
                                         //disabled={}
                                         href={`/vault/${caseItem.id}`}
@@ -231,7 +231,7 @@ const Page = ({ session }) => {
                                     >
                                         <MdModeEdit className="text-lg" />
 
-                                    </button>
+                                    </Link>
                                     <button
                                         onClick={() => handleDelete(caseItem.id)}
                                         disabled={deletingId === caseItem.id}
