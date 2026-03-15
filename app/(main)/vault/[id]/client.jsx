@@ -69,15 +69,15 @@ const Client = ({ session }) => {
     try {
       setSending(true)
       const docRef = doc(db, "cases", id)
-      handleClick({ vertical: 'top', horizontal: 'right' })
       await updateDoc(docRef, {
         title,
         description,
         category,
         date
       })
-
+      
       router.push("/vault")
+      handleClick({ vertical: 'top', horizontal: 'right' })
 
     } catch (error) {
       console.error("Error updating case:", error)
