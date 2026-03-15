@@ -22,141 +22,142 @@ const Client = ({ session }) => {
 
   const handleClose = () => {
     setState({ ...state, open: false });
+  };
 
-    useEffect(() => {
+  useEffect(() => {
 
-      const fetchCase = async () => {
-
-        try {
-
-          const docRef = doc(db, "cases", id)
-          const docSnap = await getDoc(docRef)
-
-          if (docSnap.exists()) {
-
-            const data = docSnap.data()
-
-            setTitle(data.title)
-            setDescription(data.description)
-            setCategory(data.category)
-            setDate(data.date)
-
-          }
-
-        } catch (error) {
-          console.error("Error fetching case:", error)
-        } finally {
-          setLoading(false)
-        }
-
-      }
-
-      fetchCase()
-
-    }, [id])
-
-
-    const handleUpdate = async (e) => {
-
-      e.preventDefault()
+    const fetchCase = async () => {
 
       try {
-        setSending(true)
-        const docRef = doc(db, "cases", id)
-        handleClick({ vertical: 'top', horizontal: 'right' })
-        await updateDoc(docRef, {
-          title,
-          description,
-          category,
-          date
-        })
 
-        router.push("/vault")
+        const docRef = doc(db, "cases", id)
+        const docSnap = await getDoc(docRef)
+
+        if (docSnap.exists()) {
+
+          const data = docSnap.data()
+
+          setTitle(data.title)
+          setDescription(data.description)
+          setCategory(data.category)
+          setDate(data.date)
+
+        }
 
       } catch (error) {
-        console.error("Error updating case:", error)
-      }
-      finally {
-        setSending(false)
+        console.error("Error fetching case:", error)
+      } finally {
+        setLoading(false)
       }
 
     }
 
+    fetchCase()
 
-    if (loading) return <p className="text-center mt-20">Loading case...</p>
+  }, [id])
 
 
-    return (
-      <main className="min-h-dvh bg-[#f5f5f5] flex justify-center items-center p-6">
+  const handleUpdate = async (e) => {
 
-        <form
-          onSubmit={handleUpdate}
-          className="bg-white p-8 rounded-xl shadow-md w-full max-w-lg space-y-4"
-        >
+    e.preventDefault()
 
-          <h1 className="text-2xl font-bold text-[#233D4C]">
-            Edit Case
-          </h1>
+    try {
+      setSending(true)
+      const docRef = doc(db, "cases", id)
+      handleClick({ vertical: 'top', horizontal: 'right' })
+      await updateDoc(docRef, {
+        title,
+        description,
+        category,
+        date
+      })
 
-          <input
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full border p-3 rounded-lg"
-          />
+      router.push("/vault")
 
-          <textarea
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full border p-3 rounded-lg h-32"
-          />
+    } catch (error) {
+      console.error("Error updating case:", error)
+    }
+    finally {
+      setSending(false)
+    }
 
-          <input
-            type="text"
-            placeholder="Category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="w-full border p-3 rounded-lg"
-          />
+  }
 
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="w-full border p-3 rounded-lg"
-          />
 
-          <button
-            disabled={sending}
-            type="submit"
-            className="w-full bg-[#F97316] text-[#0F172A] hover:opacity-90 text-white py-3 rounded-lg cursor-pionter"
-          >
-            {
-              sending ?
-                <span className='flex items-center justify-center gap-1'>
-                  <LuLoaderCircle className='animate-spin text-md md:text-lg' />
-                  Updating...
-                </span> :
-                <span className='flex items-center justify-center gap-1'>
-                  Update Case
-                </span>
-            }
-          </button>
+  if (loading) return <p className="text-center mt-20">Loading case...</p>
 
-        </form>
-        <Snackbar
-          anchorOrigin={{ vertical, horizontal }}
-          open={open}
-          onClose={handleClose}
-          message="Successfully Submitted!!!"
-          key={vertical + horizontal}
-          autoHideDuration={5000}
+
+  return (
+    <main className="min-h-dvh bg-[#f5f5f5] flex justify-center items-center p-6">
+
+      <form
+        onSubmit={handleUpdate}
+        className="bg-white p-8 rounded-xl shadow-md w-full max-w-lg space-y-4"
+      >
+
+        <h1 className="text-2xl font-bold text-[#233D4C]">
+          Edit Case
+        </h1>
+
+        <input
+          type="text"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full border p-3 rounded-lg"
         />
 
-      </main>
-    )
-  }}
+        <textarea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="w-full border p-3 rounded-lg h-32"
+        />
 
-  export default Client
+        <input
+          type="text"
+          placeholder="Category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="w-full border p-3 rounded-lg"
+        />
+
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="w-full border p-3 rounded-lg"
+        />
+
+        <button
+          disabled={sending}
+          type="submit"
+          className="w-full bg-[#F97316] text-[#0F172A] hover:opacity-90 text-white py-3 rounded-lg cursor-pionter"
+        >
+          {
+            sending ?
+              <span className='flex items-center justify-center gap-1'>
+                <LuLoaderCircle className='animate-spin text-md md:text-lg' />
+                Updating...
+              </span> :
+              <span className='flex items-center justify-center gap-1'>
+                Update Case
+              </span>
+          }
+        </button>
+
+      </form>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        onClose={handleClose}
+        message="Successfully Submitted!!!"
+        key={vertical + horizontal}
+        autoHideDuration={5000}
+      />
+
+    </main>
+  )
+}
+
+export default Client
