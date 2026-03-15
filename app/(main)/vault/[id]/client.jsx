@@ -15,6 +15,11 @@ const Client = ({ session }) => {
   const [category, setCategory] = useState("")
   const [date, setDate] = useState("")
   const [loading, setLoading] = useState(true)
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
   const { vertical, horizontal, open } = state;
   const handleClick = (newState) => {
     setState({ ...newState, open: true });
