@@ -30,7 +30,7 @@ const Client = ({ session }) => {
   };
 
   useEffect(() => {
-
+    if (!id) return
     const fetchCase = async () => {
 
       try {
@@ -75,9 +75,10 @@ const Client = ({ session }) => {
         category,
         date
       })
-      
-      router.push("/vault")
       handleClick({ vertical: 'top', horizontal: 'right' })
+      setTimeout(() => {
+        router.push("/vault")
+      }, 1200)
 
     } catch (error) {
       console.error("Error updating case:", error)
@@ -89,10 +90,10 @@ const Client = ({ session }) => {
   }
 
 
-  if (loading) return
-    <p className="text-center mt-20">Loading case...</p>
-
-
+  if (loading) return (
+    <p className="text-center mt-20 min-h-dvh">Loading case...</p>
+  )
+    
   return (
     <main className="min-h-dvh bg-[#f5f5f5] flex justify-center items-center p-6">
 
