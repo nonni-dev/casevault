@@ -1,9 +1,9 @@
 "use client"
-
 import { useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { db } from "@/config/firebase"
 import { doc, getDoc, updateDoc } from "firebase/firestore"
+import { LuLoaderCircle } from "react-icons/lu"
 
 const Page = () => {
 
@@ -121,6 +121,7 @@ const Page = () => {
         />
 
         <button
+          disabled={sending}
           type="submit"
           className="w-full bg-[#233D4C] text-white py-3 rounded-lg"
         >
