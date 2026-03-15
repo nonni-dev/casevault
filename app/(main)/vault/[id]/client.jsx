@@ -9,7 +9,7 @@ const Page = () => {
 
   const { id } = useParams()
   const router = useRouter()
-
+  const [sending, setSending] = useState(false)
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [category, setCategory] = useState("")
@@ -54,9 +54,8 @@ const Page = () => {
     e.preventDefault()
 
     try {
-
+      setSending(true)
       const docRef = doc(db, "cases", id)
-
       await updateDoc(docRef, {
         title,
         description,
@@ -68,6 +67,9 @@ const Page = () => {
 
     } catch (error) {
       console.error("Error updating case:", error)
+    }
+    finally {
+      setSending(false)
     }
 
   }
@@ -92,14 +94,14 @@ const Page = () => {
           type="text"
           placeholder="Title"
           value={title}
-          onChange={(e)=>setTitle(e.target.value)}
+          onChange={(e) => setTitle(e.target.value)}
           className="w-full border p-3 rounded-lg"
         />
 
         <textarea
           placeholder="Description"
           value={description}
-          onChange={(e)=>setDescription(e.target.value)}
+          onChange={(e) => setDescription(e.target.value)}
           className="w-full border p-3 rounded-lg h-32"
         />
 
@@ -107,14 +109,14 @@ const Page = () => {
           type="text"
           placeholder="Category"
           value={category}
-          onChange={(e)=>setCategory(e.target.value)}
+          onChange={(e) => setCategory(e.target.value)}
           className="w-full border p-3 rounded-lg"
         />
 
         <input
           type="date"
           value={date}
-          onChange={(e)=>setDate(e.target.value)}
+          onChange={(e) => setDate(e.target.value)}
           className="w-full border p-3 rounded-lg"
         />
 
@@ -122,7 +124,16 @@ const Page = () => {
           type="submit"
           className="w-full bg-[#233D4C] text-white py-3 rounded-lg"
         >
-          Update Case
+          {
+            sending ?
+              <span className='flex items-center justify-center gap-1'>
+                <LuLoaderCircle className='animate-spin text-md md:text-lg' />
+                Updating...
+              </span> :
+              <span className='flex items-center justify-center gap-1'>
+                Update Case
+              </span>
+          }
         </button>
 
       </form>
