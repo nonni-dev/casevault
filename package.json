@@ -11,6 +11,7 @@
     "@auth/firebase-adapter": "^2.11.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.9",
     "@mui/material": "^7.3.7",
     "firebase": "^12.8.0",
     "firebase-admin": "^13.6.0",
