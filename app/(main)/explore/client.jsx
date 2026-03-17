@@ -7,6 +7,7 @@ import { Avatar } from '@mui/material'
 import { Patua_One } from 'next/font/google'
 import { LuLoaderCircle } from "react-icons/lu";
 import Link from 'next/link'
+import { FaRegHeart } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa";
 
 
@@ -133,7 +134,7 @@ const Client = ({ session }) => {
 
     return (
         <main className="min-h-dvh bg-[#f5f5f5] bg-no-repeat bg-center bg-cover min-h-dvh">
-            <div className="pt-12 pb-10 lg:pt-32 lg:pb-20 md:pt-20 md:pb-16 min-h-dvh px-2 md:px-6 max-md:text-sm">
+            <div className="pt-10 pb-10 lg:pt-24 lg:pb-20 md:pt-20 md:pb-16 min-h-dvh px-2 md:px-6 max-md:text-sm">
                 <div className="max-w-7xl mx-auto">
 
                     {/* Header */}
@@ -184,33 +185,34 @@ const Client = ({ session }) => {
                                     <p className='text-gray-700 text-center col-span-full'>No result found for "{searchTerm}"</p>
                                 ) : (
                                     filteredCases.map(caseItem => (
-                                        <div key={caseItem.id} className="bg-[#233D4C] rounded-xl p-5 shadow-md relative pb-10">
-                                            <div className='flex gap-5 items-center mb-5'>
+                                        <div key={caseItem.id} className="rounded-xl p-5 shadow-md lg:shadow-lg relative pb-10 bg-[#f5f5f5]">
+                                            <div className='flex gap-3 md:gap-5 items-center mb-5'>
                                                 <Avatar alt={caseItem.name} src={caseItem.image} sx={{
                                                     width: { xs: 48, sm: 54, md: 60 },
                                                     height: { xs: 48, sm: 54, md: 60 },
                                                 }} className=' cursor-pointer ' />
                                                 <div>
-                                                    <div className={`mt-4 text-lg text-[#f5f5f5] ${font.className} antialiased font-base`}>
+                                                    <div className={`mt-4 text-base md:text-lg text-[#233D4C]  ${font.className} antialiased font-base`}>
                                                         {caseItem.author}
                                                     </div>
-                                                    <span className="text-sm text-gray-300 rounded capitalize">
+                                                    <span className="md:text-sm text-gray-800 rounded capitalize text-xs">
                                                         {caseItem.category}
                                                     </span>
-                                                    <p className='text-xs text-yellow-400'>Occurance Date:{`  `}<span className="">
+                                                    <p className='text-xs text-yellow-800'>Occurance Date:{`  `}<span className="">
                                                         {caseItem.date}
                                                     </span></p>
                                                 </div>
                                             </div>
 
-                                            <h2 className="font-bold text-md md:text-lg text-yellow-600 mb-2 capitalize">
+                                            <h2 className="font-bold text-md md:text-lg text-yellow-700 mb-2 capitalize">
                                                 {caseItem.title}
                                             </h2>
 
-                                            <p className="text-gray-200 text-base italic 
+                                            <p className="text-gray-900 text-md md:text-base italic mx-auto 
                                                 overflow-hidden 
                                                 [display:-webkit-box] 
-                                                [-webkit-line-clamp:8] 
+                                                [-webkit-line-clamp:10] 
+                                                md:[-webkit-line-clamp:8] 
                                                 [-webkit-box-orient:vertical]">
                                                 {caseItem.description}
                                             </p>
@@ -228,20 +230,20 @@ const Client = ({ session }) => {
 
                                                     ) : (
 
-                                                        <FaHeart
-                                                            className="cursor-pointer text-[#f5f5f5]"
+                                                        <FaRegHeart
+                                                            className="cursor-pointer"
                                                             onClick={() => toggleLike(caseItem.id, caseItem.likes)}
                                                         />
 
                                                     )}
 
-                                                    <span className="text-sm text-gray-300">
+                                                    <span className="text-sm text-gray-800">
                                                         {caseItem.likes?.length || 0}
                                                     </span>
 
                                                 </p>
                                             </div>
-                                            <p className="text-xs font-semibold text-gray-400 mt-3  bottom-3 right-4 absolute">
+                                            <p className="text-xs font-semibold text-gray-500 mt-3  bottom-3 right-4 absolute">
                                                 {timeAgo(caseItem.createdAt)}
                                             </p>
                                         </div>

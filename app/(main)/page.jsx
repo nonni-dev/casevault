@@ -148,9 +148,6 @@ const page = async () => {
                     </div>
                 </div>
             </section>
-            <section className="bg-[url('/725261188709c595aa25229b75675f53.jpg')] h-[100vh]">
-
-            </section>
         </main>
     )
 }

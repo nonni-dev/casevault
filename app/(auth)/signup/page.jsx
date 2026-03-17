@@ -5,6 +5,7 @@ import { TiVendorApple } from "react-icons/ti";
 import { FaGithub } from "react-icons/fa6";
 import { signIn, auth } from "@/auth"
 import { Denk_One } from 'next/font/google';
+import { redirect } from 'next/navigation';
 
 const font = Denk_One({
     subsets: ["latin"],

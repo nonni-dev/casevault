@@ -133,13 +133,13 @@ const Page = ({ session }) => {
 
                     <div className="text-center mt-20 space-y-3">
 
-                        <p className="text-lg text-gray-600">
+                        <p className="md:text-lg text-gray-600 text-md">
                             You haven't posted any cases yet.
                         </p>
 
                         <Link
-                            href="/create"
-                            className="bg-[#233D4C] text-white px-5 py-2 rounded-lg"
+                            href="/writecase"
+                            className="bg-[#233D4C] text-white px-5 py-2 rounded-lg max-md:text-md"
                         >
                             Post Your First Case
                         </Link>
@@ -156,12 +156,12 @@ const Page = ({ session }) => {
 
                             <div
                                 key={caseItem.id}
-                                className="bg-[#233D4C] rounded-xl p-5 shadow-md relative pb-10"
+                                className="bg-[#f5f5f5] rounded-xl p-5 shadow-md relative pb-10"
                             >
 
                                 {/* Author */}
 
-                                <div className="flex gap-4 items-center mb-4">
+                                <div className="flex gap-3 md:gap-4 items-center mb-4">
 
                                     <Avatar
                                         alt={caseItem.author}
@@ -175,12 +175,14 @@ const Page = ({ session }) => {
                                     <div>
 
                                         <p
-                                            className={`text-lg text-white ${font.className}`}
+                                            className={`mt-4 text-base md:text-lg text-[#233D4C]  ${font.className} antialiased font-base`}
                                         >
                                             {caseItem.author}
                                         </p>
-
-                                        <span className="text-sm text-gray-300 capitalize">
+                                        <p className='text-xs text-yellow-800'>Occurance Date:{`  `}<span className="">
+                                            {caseItem.date}
+                                        </span></p>
+                                        <span className="md:text-sm text-gray-800 capitalize text-xs">
                                             {caseItem.category}
                                         </span>
 
@@ -191,45 +193,45 @@ const Page = ({ session }) => {
 
                                 {/* Title */}
 
-                                <h2 className="font-bold text-lg text-yellow-500 mb-2 capitalize">
+                                <h2 className="font-bold text-md md:text-lg text-yellow-700 mb-2 capitalize">
                                     {caseItem.title}
                                 </h2>
 
 
                                 {/* Description */}
 
-                                <p className="text-gray-200 italic line-clamp-6">
+                                <p className="text-gray-900 text-md md:text-base italic mx-auto 
+                                                overflow-hidden 
+                                                [display:-webkit-box] 
+                                                [-webkit-line-clamp:10] 
+                                                md:[-webkit-line-clamp:8] 
+                                                [-webkit-box-orient:vertical]">
                                     {caseItem.description}
                                 </p>
 
 
                                 {/* Read More */}
 
-                                <Link
-                                    href={`/explore/${caseItem.id}`}
-                                    className="text-red-400 text-sm underline"
-                                >
-                                    Read more
+                                <Link className='md:text-sm text-xs underline text-red-500' href={`/explore/${caseItem.id}`}>Read more
                                 </Link>
-
 
                                 {/* Timestamp */}
 
-                                <p className="text-xs text-gray-400 absolute bottom-3 left-4">
+                                <p className="text-xs font-semibold text-gray-500 mt-3  bottom-3 right-4 absolute">
                                     {timeAgo(caseItem.createdAt)}
                                 </p>
 
 
                                 {/* Delete Button */}
 
-                                <div className="absolute top-3 right-3 flex items center gap-3">
+                                <div className="absolute top-3 right-3 flex items center md:gap-3 gap-1">
                                     <Link
                                         //onClick={}
                                         //disabled={}
                                         href={`/vault/${caseItem.id}`}
                                         className=" text-[#f5f5f5]"
                                     >
-                                        <MdModeEdit className="text-lg" />
+                                        <MdModeEdit className="text-lg text-[#000]" />
 
                                     </Link>
                                     <button

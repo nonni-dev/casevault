@@ -5,9 +5,9 @@ import Client from './client'
 
 const page = async () => {
   const session = await auth()
-  //if (!session) {
-   // redirect("/auth/signin")
-  //}
+  if (!session) {
+   redirect("/auth/signin")
+  }
   return (
     <div>
       <Client session={session}/>
