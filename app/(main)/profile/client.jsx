@@ -185,7 +185,7 @@ const page = ({ session }) => {
                                 <p className="md:hidden px-3 py-1 bg-gray-200 rounded-full font-semibold text-sm">Edit</p>
                             </div>
                             <div>
-                                <p className="text-[#233D4C] font-semibold md:mt-5 text-sm">{session.user.email}</p>
+                                <p className="text-[#233D4C] font-semibold md:mt-5 text-sm md:text-md">{session.user.email}</p>
                             </div>
                         </div>
                         <div>
