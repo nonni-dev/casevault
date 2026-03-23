@@ -81,27 +81,27 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-4">
+            {/* <div className="flex items-start gap-4">
                 <MapPin className="w-5 h-5 text-[#55fff6]" />
               <div>
                 <p className="text-gray-300">Abuja, Nigeria</p>
               </div>
-            </div>
+            </div> */}
+                        <a href="https://x.com/Nonni_d3v" className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center text-lg">
+                            <FaXTwitter />
+                        </a>
           </div>
                     </div>
                     <div className='flex gap-3 text-xl md:text-2xl max-md:mx-auto text-gray-800'>
-                        <a href="#" className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center text-lg">
+                        {/* <a href="#" className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center text-lg">
                             <FaWhatsapp />
-                        </a>
-                        <a href="#" className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center text-lg">
-                            <FaXTwitter />
                         </a>
                         <a href="#" className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center text-lg">
                             <FaInstagram />
                         </a>
                         <a href="#" className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center text-lg">
                             <FaFacebookF />
-                        </a>
+                        </a> */}
                     </div>
                 </div>
 

@@ -63,7 +63,7 @@ const Client = ({ session }) => {
                                     userId: session?.user?.id,
                                     image: session?.user?.image || "",
                                     author: session?.user?.name || "Anonymous",
-
+                                    likesCount: 0,
                                 }
                                 try {
                                     setSending(true)

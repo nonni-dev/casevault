@@ -57,7 +57,7 @@ const Navbar = () => {
         { label: "Home", url: "/", icon: <HomeIcon /> },
         { label: "Explore", url: "/explore", icon: <ExploreIcon /> },
         { label: "Write Case", url: "/writecase", icon: <EditNoteIcon /> },
-        { label: "My Vault", url: "/vault", icon: <FolderIcon /> },
+        { label: "About", url: "/vault", icon: <FolderIcon /> },
         { label: "Contact", url: "/contact", icon: <ContactMailIcon /> },
     ];
     const naviLinks = [
@@ -154,7 +154,7 @@ const Navbar = () => {
                                                 setDrawerOpen(false);
                                             }}
                                             sx={{
-                                                backgroundColor: active ? "#FFE4D6" : "transparent",
+                                                backgroundColor: active ? "rgba(35, 61, 76, 0.2)" : "transparent",
                                                 '&:hover': { backgroundColor: "#f0f0f0" },
                                             }}
                                         >

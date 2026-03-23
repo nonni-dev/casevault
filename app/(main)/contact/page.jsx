@@ -1,5 +1,4 @@
 import { auth } from '@/auth'
-import { redirect } from 'next/navigation'
 import React from 'react'
 import { Mail, Phone, MapPin } from "lucide-react";
 import { FaInstagram, FaWhatsapp, FaXTwitter } from 'react-icons/fa6';
@@ -13,11 +12,6 @@ const protest = Dancing_Script({
 
 const page = async () => {
   const session = await auth()
-
-  if (!session) {
-    redirect("/signin")
-  }
-
 
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-16">
@@ -73,15 +67,15 @@ const page = async () => {
           <div className="mt-10">
             <p className="font-semibold text-gray-800 mb-3">Follow Us</p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-blue-800 text-white flex items-center justify-center text-xl">
-                <FaFacebookF />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center text-xl">
+              <a href="https://x.com/Nonni_d3v" className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center text-xl">
                 <FaXTwitter />
+              </a>
+              {/*} <a href="#" className="w-10 h-10 rounded-full bg-blue-800 text-white flex items-center justify-center text-xl">
+                <FaFacebookF />
               </a>
               <a href="#" className="w-10 h-10 rounded-full bg-pink-700 text-white flex items-center justify-center  text-xl">
                 <FaInstagram />
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

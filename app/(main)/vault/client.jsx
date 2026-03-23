@@ -1,294 +1,167 @@
 "use client"
-import { MdModeEdit } from "react-icons/md";
-import React, { useEffect, useState } from "react"
-import { collection, query, where, getDocs, doc, deleteDoc } from "firebase/firestore"
-import { db } from "@/config/firebase"
-import { Avatar } from "@mui/material"
-import CircularProgress from "@mui/material/CircularProgress"
-import Snackbar from "@mui/material/Snackbar"
-import MuiAlert from "@mui/material/Alert"
-import Link from "next/link"
-import { IoTrashOutline } from "react-icons/io5"
-import { LuLoaderCircle } from "react-icons/lu"
-import { Patua_One } from "next/font/google"
 
-const font = Patua_One({
-    subsets: ["latin"],
-    weight: ["400"],
-})
-
-const Page = ({ session }) => {
-
-    const uid = session?.user?.id
-
-    const [cases, setCases] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [deletingId, setDeletingId] = useState(null)
-
-    const [snackOpen, setSnackOpen] = useState(false)
-
-    const handleClose = () => setSnackOpen(false)
-
-    useEffect(() => {
-        const fetchVaultCases = async () => {
-            try {
-
-                const q = query(
-                    collection(db, "cases"),
-                    where("userId", "==", uid)
-                )
-
-                const querySnapshot = await getDocs(q)
-
-                const userCases = querySnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }))
-
-                setCases(userCases)
-
-            } catch (error) {
-                console.error("Error fetching vault cases:", error)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        if (uid) fetchVaultCases()
-
-    }, [uid])
-
-
-    const handleDelete = async (id) => {
-        try {
-
-            setDeletingId(id)
-
-            await deleteDoc(doc(db, "cases", id))
-
-            setCases((prev) => prev.filter((item) => item.id !== id))
-
-            setSnackOpen(true)
-
-        } catch (error) {
-            console.error("Delete error:", error)
-        } finally {
-            setDeletingId(null)
-        }
-    }
-
-
-    const timeAgo = (timestamp) => {
-        if (!timestamp) return ""
-
-        const now = new Date()
-        const past =
-            typeof timestamp.toDate === "function"
-                ? timestamp.toDate()
-                : new Date(timestamp)
-
-        const seconds = Math.floor((now - past) / 1000)
-
-        const minutes = Math.floor(seconds / 60)
-        const hours = Math.floor(minutes / 60)
-        const days = Math.floor(hours / 24)
-
-        if (seconds < 60) return "Just now"
-        if (minutes < 60) return `${minutes} minute${minutes > 1 ? "s" : ""} ago`
-        if (hours < 24) return `${hours} hour${hours > 1 ? "s" : ""} ago`
-        return `${days} day${days > 1 ? "s" : ""} ago`
-    }
-
-
-    return (
-        <main className="min-h-dvh bg-[#f5f5f5] px-3 md:px-6 py-16">
-
-            <div className="max-w-7xl mx-auto">
-
-                {/* Header */}
-                <div className="mb-10">
-
-                    <h1 className="text-4xl font-bold text-[#233D4C]">
-                        Your Vault
-                    </h1>
-
-                    <p className="text-gray-600 mt-2">
-                        Manage the cases you've shared.
-                    </p>
-
-                </div>
-
-
-                {/* Loading */}
-                {loading ? (
-
-                    <span className="flex items-center justify-center gap-2 mt-20">
-                        <LuLoaderCircle className="animate-spin text-xl" />
-                        <p>Loading your cases...</p>
-                    </span>
-
-                ) : cases.length === 0 ? (
-
-                    /* Empty Vault */
-
-                    <div className="text-center mt-20 space-y-3">
-
-                        <p className="md:text-lg text-gray-600 text-md">
-                            You haven't posted any cases yet.
-                        </p>
-
-                        <Link
-                            href="/writecase"
-                            className="bg-[#233D4C] text-white px-5 py-2 rounded-lg max-md:text-md"
-                        >
-                            Post Your First Case
-                        </Link>
-
-                    </div>
-
-                ) : (
-
-                    /* Case Cards */
-
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                        {cases.map((caseItem) => (
-
-                            <div
-                                key={caseItem.id}
-                                className="bg-[#f5f5f5] rounded-xl p-5 shadow-md relative pb-10"
-                            >
-
-                                {/* Author */}
-
-                                <div className="flex gap-3 md:gap-4 items-center mb-4">
-
-                                    <Avatar
-                                        alt={caseItem.author}
-                                        src={caseItem.image}
-                                        sx={{
-                                            width: 55,
-                                            height: 55,
-                                        }}
-                                    />
-
-                                    <div>
-
-                                        <p
-                                            className={`mt-4 text-base md:text-lg text-[#233D4C]  ${font.className} antialiased font-base`}
-                                        >
-                                            {caseItem.author}
-                                        </p>
-                                        <p className='text-xs text-yellow-800'>Occurance Date:{`  `}<span className="">
-                                            {caseItem.date}
-                                        </span></p>
-                                        <span className="md:text-sm text-gray-800 capitalize text-xs">
-                                            {caseItem.category}
-                                        </span>
-
-                                    </div>
-
-                                </div>
-
-
-                                {/* Title */}
-
-                                <h2 className="font-bold text-md md:text-lg text-yellow-700 mb-2 capitalize">
-                                    {caseItem.title}
-                                </h2>
-
-
-                                {/* Description */}
-
-                                <p className="text-gray-900 text-md md:text-base italic mx-auto 
-                                                overflow-hidden 
-                                                [display:-webkit-box] 
-                                                [-webkit-line-clamp:10] 
-                                                md:[-webkit-line-clamp:8] 
-                                                [-webkit-box-orient:vertical]">
-                                    {caseItem.description}
-                                </p>
-
-
-                                {/* Read More */}
-
-                                <Link className='md:text-sm text-xs underline text-red-500' href={`/explore/${caseItem.id}`}>Read more
-                                </Link>
-
-                                {/* Timestamp */}
-
-                                <p className="text-xs font-semibold text-gray-500 mt-3  bottom-3 right-4 absolute">
-                                    {timeAgo(caseItem.createdAt)}
-                                </p>
-
-
-                                {/* Delete Button */}
-
-                                <div className="absolute top-3 right-3 flex items center md:gap-3 gap-1">
-                                    <Link
-                                        //onClick={}
-                                        //disabled={}
-                                        href={`/vault/${caseItem.id}`}
-                                        className=" text-[#f5f5f5]"
-                                    >
-                                        <MdModeEdit className="text-lg text-[#000]" />
-
-                                    </Link>
-                                    <button
-                                        onClick={() => handleDelete(caseItem.id)}
-                                        disabled={deletingId === caseItem.id}
-                                        className=" text-red-500"
-                                    >
-
-                                        {deletingId === caseItem.id ? (
-
-                                            <CircularProgress
-                                                size={20}
-                                                sx={{ color: "red" }}
-                                            />
-
-                                        ) : (
-
-                                            <IoTrashOutline className="text-lg" />
-
-                                        )}
-
-                                    </button>
-                                </div>
-
-                            </div>
-
-                        ))}
-
-                    </div>
-
-                )}
-
-
-                {/* Snackbar */}
-
-                <Snackbar
-                    open={snackOpen}
-                    autoHideDuration={4000}
-                    onClose={handleClose}
-                >
-
-                    <MuiAlert
-                        severity="success"
-                        variant="filled"
-                        onClose={handleClose}
-                    >
-
-                        Case deleted successfully
-
-                    </MuiAlert>
-
-                </Snackbar>
-
-            </div>
-
-        </main>
-    )
+import React from "react"
+
+const Page = () => {
+  return (
+    <main className="min-h-screen bg-[#f5f5f5] px-6 md:px-16 py-16">
+
+      {/* HERO */}
+      <section className="text-center max-w-3xl mx-auto">
+        <h1 className="text-3xl md:text-5xl font-bold text-[#233D4C]">
+          About CaseVault
+        </h1>
+        <p className="mt-4 text-gray-700 text-md md:text-lg">
+          A platform built to capture, share, and learn from real-life cases.
+        </p>
+        <p className="mt-2 text-gray-600 text-sm">
+          Not just stories — real experiences, real lessons.
+        </p>
+      </section>
+
+      {/* WHAT IS CASEVAULT */}
+      <section className="mt-16 max-w-4xl mx-auto">
+        <h2 className="text-2xl font-semibold text-[#233D4C] mb-3">
+          What is CaseVault?
+        </h2>
+        <p className="text-gray-700 leading-relaxed">
+          CaseVault is a platform designed for people to document and share
+          real-world cases — situations they’ve experienced, witnessed, or
+          learned from. These cases span across multiple areas like business,
+          technology, law, social life, and personal experiences.
+        </p>
+        <p className="text-gray-700 leading-relaxed mt-4">
+          Instead of relying only on theories, CaseVault focuses on real-life
+          situations that provide deeper understanding and practical insights.
+        </p>
+      </section>
+
+      {/* THE PROBLEM */}
+      <section className="mt-12 max-w-4xl mx-auto">
+        <h2 className="text-2xl font-semibold text-[#233D4C] mb-3">
+          The Problem
+        </h2>
+        <p className="text-gray-700 leading-relaxed">
+          Most platforms today are filled with opinions, trends, and surface-level
+          discussions. While useful, they often lack depth and real-life context.
+        </p>
+        <p className="text-gray-700 leading-relaxed mt-4">
+          People learn faster and better through real situations — what actually
+          happened, what went wrong, and what could have been done differently.
+        </p>
+      </section>
+
+      {/* THE SOLUTION */}
+      <section className="mt-12 max-w-4xl mx-auto">
+        <h2 className="text-2xl font-semibold text-[#233D4C] mb-3">
+          Our Solution
+        </h2>
+        <p className="text-gray-700 leading-relaxed">
+          CaseVault provides a space where users can:
+        </p>
+
+        <ul className="list-disc ml-6 mt-4 text-gray-700 space-y-2">
+          <li>Document real-life cases and experiences</li>
+          <li>Explore cases shared by others</li>
+          <li>Learn from real-world outcomes</li>
+          <li>Engage with content through likes and interactions</li>
+        </ul>
+      </section>
+
+      {/* FEATURES */}
+      <section className="mt-16 max-w-5xl mx-auto">
+        <h2 className="text-2xl font-semibold text-[#233D4C] mb-6 text-center">
+          Core Features
+        </h2>
+
+        <div className="grid md:grid-cols-2 gap-6">
+
+          <div className="bg-white p-6 rounded-xl shadow">
+            <h3 className="font-bold text-[#233D4C] text-lg">📌 Case Creation</h3>
+            <p className="text-gray-600 mt-2 text-sm">
+              Users can share detailed cases with titles, descriptions, categories,
+              and timelines.
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow">
+            <h3 className="font-bold text-[#233D4C] text-lg">🔍 Explore System</h3>
+            <p className="text-gray-600 mt-2 text-sm">
+              Browse and search through a growing collection of real-world cases.
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow">
+            <h3 className="font-bold text-[#233D4C] text-lg">❤️ Likes</h3>
+            <p className="text-gray-600 mt-2 text-sm">
+              Interact with cases and highlight valuable experiences.
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow">
+            <h3 className="font-bold text-[#233D4C] text-lg">🛠 Case Management</h3>
+            <p className="text-gray-600 mt-2 text-sm">
+              Edit, update, and manage your own cases easily.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <div className="mt-16 max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
+
+  {/* HOW IT WORKS */}
+  <section>
+    <h2 className="text-2xl font-semibold text-[#233D4C] mb-4">
+      How It Works
+    </h2>
+
+    <div className="space-y-4 text-gray-700">
+      <p><strong>1.</strong> Create an account and log in</p>
+      <p><strong>2.</strong> Write and publish a case</p>
+      <p><strong>3.</strong> Explore cases shared by others</p>
+      <p><strong>4.</strong> Engage through likes and (soon) comments</p>
+    </div>
+  </section>
+
+  {/* FUTURE */}
+  <section>
+    <h2 className="text-2xl font-semibold text-[#233D4C] mb-4">
+      Future Plans
+    </h2>
+
+    <p className="text-gray-700 mb-4">
+      CaseVault is continuously evolving. Upcoming features include:
+    </p>
+
+    <div className="space-y-2 text-gray-700">
+      <p>💬 Comments system</p>
+      <p>🔖 Bookmarks / Save cases</p>
+      <p>🌙 Dark mode</p>
+      <p>👤 User profiles & followers</p>
+    </div>
+  </section>
+
+</div>
+
+      {/* BUILDER SECTION */}
+      <section className="mt-20 max-w-3xl mx-auto text-center">
+        <h2 className="text-2xl font-semibold text-[#233D4C] mb-3">
+          Built By
+        </h2>
+        <p className="text-gray-700">
+          Built with passion by a developer documenting his journey and
+          improving every day 🚀
+        </p>
+      </section>
+
+      {/* FOOTER */}
+      <section className="mt-10 text-center text-gray-500 text-sm">
+        Built with ❤️ using Next.js & Firebase
+      </section>
+
+    </main>
+  )
 }
 
 export default Page
