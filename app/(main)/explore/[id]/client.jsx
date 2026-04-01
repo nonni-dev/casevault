@@ -153,14 +153,19 @@ const Client = ({ post, id, session }) => {
               placeholder="Write a comment..."
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              className="flex-1 border p-1 md:p-2 rounded-lg"
+              className="border p-1 md:p-2 rounded-lg placeholder:text-xs md:placeholder:text-sm text-sm w-full focus:outline-none focus:ring-1 focus:ring-[#233D4C] border-[#233D4C]"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleComment()
+                }
+              }}
             />
 
             <button
               onClick={handleComment}
               className="bg-[#233D4C] text-white md:px-4 rounded-lg px-2"
             >
-              {sending ? "..." : <p className="text-sm"><FaPaperPlane /></p>}
+              {sending ? <p className="animate-bounce">...</p> : <p className="text-sm"><FaPaperPlane /></p>}
             </button>
           </div>
 
