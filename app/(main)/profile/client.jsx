@@ -272,7 +272,7 @@ const page = ({ session }) => {
 
                             <div
                                 key={caseItem.id}
-                                className="bg-[#f5f5f5] rounded-xl p-5 shadow-md relative pb-10"
+                                className="bg-[#f5f5f5] rounded-xl p-5 shadow-md relative pb-10  bg-white"
                             >
 
                                 {/* Author */}

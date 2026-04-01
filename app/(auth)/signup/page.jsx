@@ -20,7 +20,7 @@ const page = async () => {
               redirect("/")
           }
     return (
-        <main className='min-h-dvh min-w-dvw flex items-center justify-center bg-[#233D4C] md:px-30 overflow-hidden'>
+        <main className='min-h-screen md:min-h-dvh min-w-dvw flex items-center justify-center bg-[#233D4C] md:px-30 overflow-hidden'>
             <div className="md:min-w-md md:p-8 p-4">
                 <h1 className={`text-xl font-semibold text-[#f5f5f5] md:text-3xl ${font.className} antialiased text-center`} alt='logo'>Case<span className='font-bold'>Vault</span></h1>
 

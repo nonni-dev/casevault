@@ -22,7 +22,7 @@ const page = async () => {
       }
 
     return (
-        <div className="min-h-dvh md:min-w-dvw flex items-center justify-center bg-[#233D4C] md:px-30 overflow-hidden w-full">
+        <div className="min-h-screen md:min-h-dvh md:min-w-dvw flex items-center justify-center bg-[#233D4C] md:px-30 overflow-hidden w-full">
             <div className="md:min-w-md p-4 md:p-8">
 
                 {/* Logo */}

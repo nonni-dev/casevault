@@ -1,8 +1,8 @@
 "use client"
 import React, { useEffect, useState } from "react"
-import { 
-  collection, getDocs, orderBy, query, 
-  doc, updateDoc, setDoc, deleteDoc, getDoc, increment 
+import {
+  collection, getDocs, orderBy, query,
+  doc, updateDoc, setDoc, deleteDoc, getDoc, increment
 } from "firebase/firestore"
 import { db } from "@/config/firebase"
 import { Avatar } from "@mui/material"
@@ -10,7 +10,7 @@ import { Patua_One } from "next/font/google"
 import { LuLoaderCircle } from "react-icons/lu"
 import Link from "next/link"
 import { FaRegHeart } from "react-icons/fa6"
-import { FaHeart } from "react-icons/fa"
+import { FaHeart, FaRegCommentDots } from "react-icons/fa"
 
 const font = Patua_One({
   subsets: ["latin"],
@@ -30,17 +30,17 @@ const Client = ({ session }) => {
     searchTerm.trim() === ""
       ? cases
       : cases.filter((caseItem) => {
-          const title = caseItem.title?.toLowerCase() || ""
-          const description = caseItem.description?.toLowerCase() || ""
-          const category = caseItem.category?.toLowerCase() || ""
-          const search = searchTerm.toLowerCase()
+        const title = caseItem.title?.toLowerCase() || ""
+        const description = caseItem.description?.toLowerCase() || ""
+        const category = caseItem.category?.toLowerCase() || ""
+        const search = searchTerm.toLowerCase()
 
-          return (
-            title.includes(search) ||
-            description.includes(search) ||
-            category.includes(search)
-          )
-        })
+        return (
+          title.includes(search) ||
+          description.includes(search) ||
+          category.includes(search)
+        )
+      })
 
   useEffect(() => {
     const fetchCases = async () => {
@@ -123,11 +123,11 @@ const Client = ({ session }) => {
         prev.map(item =>
           item.id === caseId
             ? {
-                ...item,
-                likesCount: alreadyLiked
-                  ? (item.likesCount || 0) - 1
-                  : (item.likesCount || 0) + 1
-              }
+              ...item,
+              likesCount: alreadyLiked
+                ? (item.likesCount || 0) - 1
+                : (item.likesCount || 0) + 1
+            }
             : item
         )
       )
@@ -209,8 +209,8 @@ const Client = ({ session }) => {
           {
             loading ?
               <span className='flex items-center justify-center gap-1 md:mt-20 mt-10'>
-                <LuLoaderCircle className='text-xl animate-spin text-center' /> 
-                <p>loading...</p> 
+                <LuLoaderCircle className='text-xl animate-spin text-center' />
+                <p>loading...</p>
               </span>
               :
               <div className="grid md:grid-cols-2 gap-6 lg:grid-cols-3">
@@ -220,10 +220,7 @@ const Client = ({ session }) => {
                   </p>
                 ) : (
                   filteredCases.map(caseItem => (
-                    <div key={caseItem.id} className="rounded-xl p-5 shadow-md lg:shadow-lg relative pb-10 bg-[#f5f5f5]">
-
-                      {/* 👇 EVERYTHING BELOW IS YOUR UI UNTOUCHED */}
-
+                    <div key={caseItem.id} className="rounded-xl p-5 shadow-md lg:shadow-lg relative pb-10 bg-[#f5f5f5] bg-white">
                       <div className='flex gap-3 md:gap-5 items-center mb-5'>
                         <Avatar alt={caseItem.name} src={caseItem.image} sx={{
                           width: { xs: 48, sm: 54, md: 60 },
@@ -259,26 +256,25 @@ const Client = ({ session }) => {
                         Read more
                       </Link>
 
-                      <div className='flex items-center bottom-3 left-6 absolute'>
-                        <p className="flex items-center gap-1 mt-3">
-
-                          {likedCases[caseItem.id] ? (
-                            <FaHeart
-                              className="text-red-500 cursor-pointer"
-                              onClick={() => toggleLike(caseItem.id)}
-                            />
-                          ) : (
-                            <FaRegHeart
-                              className="cursor-pointer"
-                              onClick={() => toggleLike(caseItem.id)}
-                            />
-                          )}
-
-                          <span className="text-sm text-gray-800">
-                            {caseItem.likesCount || 0}
-                          </span>
-
-                        </p>
+                      <div className=" bottom-3 left-6 absolute">
+                        <div className='flex items-center gap-8'>
+                          <p className="flex items-center gap-1 mt-3">
+                            {likedCases[caseItem.id] ? (
+                              <FaHeart
+                                className="text-red-500 cursor-pointer"
+                                onClick={() => toggleLike(caseItem.id)}
+                              />
+                            ) : (
+                              <FaRegHeart
+                                className="cursor-pointer"
+                                onClick={() => toggleLike(caseItem.id)}
+                              />
+                            )}
+                            <span className="text-sm text-gray-800">
+                              {caseItem.likesCount || 0}
+                            </span>
+                          </p>
+                        </div>
                       </div>
 
                       <p className="text-xs font-semibold text-gray-500 mt-3 bottom-3 right-4 absolute">

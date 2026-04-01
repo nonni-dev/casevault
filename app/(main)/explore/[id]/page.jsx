@@ -1,6 +1,7 @@
 import Client from "./client"
 import { doc, getDoc } from "firebase/firestore"
 import { db } from "@/config/firebase"
+import { auth } from "@/auth"
 
 const fetchSinglePost = async (id) => {
   try {
@@ -29,14 +30,14 @@ const fetchSinglePost = async (id) => {
 
 const Page = async ({ params }) => {
   const { id } = await params;   // ✅ FIX (NO await)
-
+  const session = await auth();
   const post = await fetchSinglePost(id)
 
   if (!post) {
     return <p className="text-center mt-20 min-h-dvh">Post not found.</p>
   }
 
-  return <Client post={post} id={id} />
+  return <Client post={post} id={id} session={session}/>
 }
 
 export default Page
