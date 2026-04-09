@@ -11,6 +11,7 @@ import { LuLoaderCircle } from "react-icons/lu"
 import Link from "next/link"
 import { FaRegHeart } from "react-icons/fa6"
 import { FaHeart, FaRegCommentDots } from "react-icons/fa"
+import CommentsDrawer from "@/components/comments/CommentsDrawer"
 
 const font = Patua_One({
   subsets: ["latin"],
@@ -220,7 +221,7 @@ const Client = ({ session }) => {
                   </p>
                 ) : (
                   filteredCases.map(caseItem => (
-                    <div key={caseItem.id} className="rounded-xl p-5 shadow-md lg:shadow-lg relative pb-10 bg-[#f5f5f5] bg-white">
+                    <div key={caseItem.id} className="rounded-xl p-3 md:p-5 md:pb-3 shadow-md lg:shadow-lg bg-white">
                       <div className='flex gap-3 md:gap-5 items-center mb-5'>
                         <Avatar alt={caseItem.name} src={caseItem.image} sx={{
                           width: { xs: 48, sm: 54, md: 60 },
@@ -255,10 +256,9 @@ const Client = ({ session }) => {
                       <Link className='md:text-sm text-xs underline text-red-500' href={`/explore/${caseItem.id}`}>
                         Read more
                       </Link>
-
-                      <div className=" bottom-3 left-6 absolute">
-                        <div className='flex items-center gap-8'>
-                          <p className="flex items-center gap-1 mt-3">
+                      <div className="flex items-center justify-between mt-3">
+                        <div className="flex items-center gap-5">
+                          <p className="flex items-center gap-1 md:text-lg">
                             {likedCases[caseItem.id] ? (
                               <FaHeart
                                 className="text-red-500 cursor-pointer"
@@ -266,21 +266,24 @@ const Client = ({ session }) => {
                               />
                             ) : (
                               <FaRegHeart
-                                className="cursor-pointer"
+                                className="cursor-pointer text-gray-800"
                                 onClick={() => toggleLike(caseItem.id)}
                               />
                             )}
-                            <span className="text-sm text-gray-800">
+                            <span className="md:text-base text-sm text-gray-800">
                               {caseItem.likesCount || 0}
                             </span>
                           </p>
+                          <div className="flex items-center gap-1">
+                            <p className="md:text-lg text-gray-800 mt-[3px] cursor-pointer"><CommentsDrawer postId={caseItem.id} session={session} />
+                            </p>
+                            <span  className="text-sm md:text-base text-gray-800">{caseItem.commentsCount || 0}</span>
+                          </div>
                         </div>
+                        <p className="text-xs font-semibold text-gray-500">
+                          {timeAgo(caseItem.createdAt)}
+                        </p>
                       </div>
-
-                      <p className="text-xs font-semibold text-gray-500 mt-3 bottom-3 right-4 absolute">
-                        {timeAgo(caseItem.createdAt)}
-                      </p>
-
                     </div>
                   ))
                 )}

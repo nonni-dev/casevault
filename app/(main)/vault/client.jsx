@@ -1,5 +1,4 @@
 "use client"
-
 import React from "react"
 
 const Page = () => {
@@ -159,7 +158,6 @@ const Page = () => {
       <section className="mt-10 text-center text-gray-500 text-sm">
         Built with ❤️ using Next.js & Firebase
       </section>
-
     </main>
   )
 }
