@@ -1,5 +1,7 @@
 import { Geist, Geist_Mono, Raleway, Inter } from "next/font/google";
 import "./globals.css";
+import Provider from "@/components/layout/Provider";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,12 +25,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${raleway.className} antialiased`}
-      >
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="bg-[#f5f5f5] dark:bg-[#0f172a] text-black dark:text-[#f5f5f5]">
+        <Provider>
+          {children}
+        </Provider>
       </body>
     </html>
-  );
+  )
 }

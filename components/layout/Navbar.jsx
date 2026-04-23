@@ -6,6 +6,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Denk_One } from 'next/font/google';
 import { useSession, signOut } from 'next-auth/react';
+import ThemeDialog from '../ThemeDialog';
 
 // MUI
 import Avatar from '@mui/material/Avatar';
@@ -51,7 +52,7 @@ const Navbar = () => {
     const toggleRightDrawer = (open) => () => {
         setRightDrawerOpen(open);
     };
-
+    const [openTheme, setOpenTheme] = useState(false);
     const navLinks = [
         { label: "Home", url: "/", icon: <HomeIcon /> },
         { label: "Explore", url: "/explore", icon: <ExploreIcon /> },
@@ -61,20 +62,20 @@ const Navbar = () => {
     ];
     const naviLinks = [
         { label: "Profile", url: "/profile", icon: <PersonIcon /> },
-        { label: "Theme", icon: <DarkMode /> },
+        { type: "theme" },
         { label: "Settings", url: "", icon: <SettingsIcon /> },
         //{ label: "My Vault", url: "/vault", icon: <FolderIcon /> },
         //{ label: "Contact", url: "/contact", icon: <ContactMailIcon /> },
     ];
 
     return (
-        <section className='sticky top-0 z-50 bg-[#f5f5f5]'>
+        <section className='sticky top-0 z-50 bg-[#f5f5f5] dark:bg-neutral-800'>
             <nav className='flex items-center justify-between md:px-8 px-3 py-4 md:py-5 shadow-md font-semibold lg:px-10'>
 
-                {/* 🍔 Hamburger */}
+                {/* Hamburger */}
                 <button
                     onClick={toggleDrawer(true)}
-                    className='lg:hidden ml-3 text-xl text-[#233D4C]'
+                    className='lg:hidden ml-3 text-xl text-[#233D4C] dark:text-[#f5f5f5]'
                 >
                     <GiHamburgerMenu />
                 </button>
@@ -93,8 +94,8 @@ const Navbar = () => {
                             key={index}
                             href={item.url}
                             className={`transition-colors ${pathname === item.url
-                                    ? "text-[#F97316]"
-                                    : "text-[#233D4C] hover:text-[#F97316]"
+                                ? "text-[#F97316]"
+                                : "text-[#233D4C] dark:text-[#f5f5f5] hover:text-[#F97316]"
                                 }`}
                         >
                             {item.label}
@@ -123,7 +124,7 @@ const Navbar = () => {
                     )}
                 </div>
 
-                {/* 📱 LEFT Drawer */}
+                {/* LEFT Drawer */}
                 <Drawer
                     anchor="left"
                     open={drawerOpen}
@@ -131,11 +132,11 @@ const Navbar = () => {
                 >
                     <Box
                         sx={{ width: 270 }}
-                        className="bg-[#f5f5f5] h-full flex flex-col text-[#233D4C]"
+                        className="bg-[#f5f5f5] h-full flex flex-col text-[#233D4C] dark:bg-neutral-800 dark:text-[#d6d6d6]"
                     >
-                        <div className="p-4 border-b border-gray-300">
+                        <div className="p-4 border-b border-gray-500">
                             <Link href={"/"}>
-                                <h1 className={`text-xl text-[#233D4C] md:text-2xl ${font.className}`}>
+                                <h1 className={`text-xl text-[#4a879c] md:text-2xl ${font.className}`}>
                                     Case<span className='font-bold'>Vault</span>
                                 </h1>
                             </Link>
@@ -153,11 +154,11 @@ const Navbar = () => {
                                                 setDrawerOpen(false);
                                             }}
                                             sx={{
-                                                backgroundColor: active ? "rgba(35, 61, 76, 0.2)" : "transparent",
+                                                backgroundColor: active ? "rgba(220, 194, 179, 0.1)" : "transparent",
                                                 '&:hover': { backgroundColor: "#f0f0f0" },
                                             }}
                                         >
-                                            <ListItemIcon sx={{ color: "#233D4C" }}>
+                                            <ListItemIcon sx={{ color: "#d6d6d6" }}>
                                                 {item.icon}
                                             </ListItemIcon>
 
@@ -206,6 +207,20 @@ const Navbar = () => {
                         {/* 📋 Same Links */}
                         <List>
                             {naviLinks.map((item, index) => {
+
+                                if (item.type === "theme") {
+                                    return (
+                                        <ListItem key={index} disablePadding>
+                                            <ListItemButton onClick={() => setOpenTheme(true)}>
+                                                <ListItemIcon sx={{ color: "#233D4C" }}>
+                                                    <DarkMode />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Theme" />
+                                            </ListItemButton>
+                                        </ListItem>
+                                    )
+                                }
+
                                 const active = pathname === item.url;
 
                                 return (
@@ -229,19 +244,21 @@ const Navbar = () => {
                                     </ListItem>
                                 );
                             })}
+                            
+                                                <ThemeDialog open={openTheme} onClose={() => setOpenTheme(false)}/>
                         </List>
 
                         {/* 🚪 Logout */}
                         {session && (
                             <div className="mt-auto p-4 border-t border-gray-300">
                                 <div className='flex gap-3 items-center'>
-                                <Logout />
-                                <button
-                                    onClick={() => signOut()}
-                                    className="text-sm text-red-500"
-                                >
-                                    Sign Out
-                                </button>
+                                    <Logout />
+                                    <button
+                                        onClick={() => signOut()}
+                                        className="text-sm text-red-500"
+                                    >
+                                        Sign Out
+                                    </button>
                                 </div>
                             </div>
                         )}

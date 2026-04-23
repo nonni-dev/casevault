@@ -49,31 +49,31 @@ const page = async () => {
             </section>
 
             {/* FEATURES */}
-            <section id="features" className=" lg:py-24 py-10 bg-[#F5F5F5]">
+            <section id="features" className=" lg:py-24 py-10 bg-[#F5F5F5] dark:bg-[#1a1a1a]">
                 <div className="max-w-7xl mx-auto px-6 text-center">
                     <h2 className="text-2xl md:text-4xl font-bold text-[#233D4C]">Why CaseVault?</h2>
-                    <p className="mt-4 text-gray-700 leading-relaxed text-base">
+                    <p className="mt-4 text-gray-700 leading-relaxed text-base dark:text-gray-300">
                         A smarter way to explore real-world cases and ideas.
                     </p>
 
                     <div className="mt-16 grid md:grid-cols-3 gap-10">
                         <div className="p-8 rounded-xl bg-[#233D4C]/10">
                             <h3 className="text-xl font-semibold text-[#F97316]">Case Libraries</h3>
-                            <p className="mt-3 text-gray-700">
+                            <p className="mt-3 text-gray-700 dark:text-gray-300">
                                 Access organized case collections across different fields and topics.
                             </p>
                         </div>
 
                         <div className="p-8 rounded-xl bg-[#233D4C]/10">
                             <h3 className="text-xl font-semibold text-[#F97316]">Community Insights</h3>
-                            <p className="mt-3 text-gray-700">
+                            <p className="mt-3 text-gray-700 dark:text-gray-300">
                                 Read opinions, discussions, and expert thoughts on every case.
                             </p>
                         </div>
 
                         <div className="p-8 rounded-xl bg-[#233D4C]/10">
                             <h3 className="text-xl font-semibold text-[#F97316]">Save & Learn</h3>
-                            <p className="mt-3 text-gray-700">
+                            <p className="mt-3 text-gray-700 dark:text-gray-300">
                                 Bookmark cases, build your knowledge, and learn faster.
                             </p>
                         </div>
@@ -84,7 +84,7 @@ const page = async () => {
             <section className="bg-[url('/tech.bg.jpg')] bg-no-repeat bg-center bg-cover bg-fixed">
                 <main className='bg-[#233D4C]/50'>
                     <div className='text-white py-24 text-center '>
-                        <h2 className="text-2xl md:text-4xl font-bold max-md:max-w-md">
+                        <h2 className="text-2xl md:text-4xl font-bold max-md:max-w-md mx-auto">
                             Start Exploring Real Cases Today
                         </h2>
 
@@ -114,7 +114,7 @@ const page = async () => {
                 </main>
             </section>
             {/* HOW IT WORKS */}
-            <section className="bg-[#EDEDED]/70 py-24 text-[#0F172A] border-t border-gray-200">
+            <section className="bg-[#EDEDED] py-24 text-[#0F172A] border-t border-gray-200">
                 <div className="max-w-7xl mx-auto px-6 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-[#233D4C]">How CaseVault Works</h2>
                     <p className="mt-4 text-gray-600">
