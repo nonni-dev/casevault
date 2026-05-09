@@ -69,20 +69,20 @@ const Navbar = () => {
     ];
 
     return (
-        <section className='sticky top-0 z-50 bg-[#f5f5f5] dark:bg-neutral-800'>
+        <section className='sticky top-0 z-50 bg-[#f5f5f5] dark:bg-neutral-900'>
             <nav className='flex items-center justify-between md:px-8 px-3 py-4 md:py-5 shadow-md font-semibold lg:px-10'>
 
                 {/* Hamburger */}
                 <button
                     onClick={toggleDrawer(true)}
-                    className='lg:hidden ml-3 text-xl text-[#233D4C] dark:text-[#f5f5f5]'
+                    className='lg:hidden ml-3 text-xl text-[#233D4C] dark:text-[#f5f5f5]/70'
                 >
                     <GiHamburgerMenu />
                 </button>
 
                 {/* 🏷 Logo */}
                 <Link href={"/"}>
-                    <h1 className={`max-md:hidden text-xl text-[#233D4C] md:text-2xl ${font.className}`}>
+                    <h1 className={`max-md:hidden text-xl text-[#233D4C] dark:text-[#f5f5f5]/90 md:text-2xl ${font.className}`}>
                         Case<span className='font-bold'>Vault</span>
                     </h1>
                 </Link>
@@ -136,7 +136,7 @@ const Navbar = () => {
                     >
                         <div className="p-4 border-b border-gray-500">
                             <Link href={"/"}>
-                                <h1 className={`text-xl text-[#4a879c] md:text-2xl ${font.className}`}>
+                                <h1 className={`text-xl text-[#4a879c] md:text-2xl dark:text-[#f5f5f5]/90 ${font.className}`}>
                                     Case<span className='font-bold'>Vault</span>
                                 </h1>
                             </Link>

@@ -14,7 +14,7 @@ const protest = Denk_One({
 const Footer = () => {
     return (
 
-        <main className="bg-[#233D4C] border-t border-gray-300 ">
+        <main className="bg-[#233D4C]">
             <div className="md:px-10 mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:gap-12 gap-8">
                 <div className='max-md:grid max-md:place-items-center'>
                     <h2 className={`md:text-xl text-lg font-semibold text-[#F5F5F5] ${protest.className} font-semibold`}>
