@@ -75,19 +75,19 @@ const Navbar = () => {
                 {/* Hamburger */}
                 <button
                     onClick={toggleDrawer(true)}
-                    className='lg:hidden ml-3 text-xl text-[#233D4C] dark:text-[#f5f5f5]/70'
+                    className='lg:hidden ml-3 text-xl text-[#233D4C] dark:text-[#f5f5f5]/80'
                 >
                     <GiHamburgerMenu />
                 </button>
 
-                {/* 🏷 Logo */}
+                {/* Logo */}
                 <Link href={"/"}>
                     <h1 className={`max-md:hidden text-xl text-[#233D4C] dark:text-[#f5f5f5]/90 md:text-2xl ${font.className}`}>
                         Case<span className='font-bold'>Vault</span>
                     </h1>
                 </Link>
 
-                {/* 💻 Desktop Nav */}
+                {/* Desktop Nav */}
                 <div className='gap-10 lg:flex hidden items-center'>
                     {navLinks.map((item, index) => (
                         <Link
@@ -103,7 +103,7 @@ const Navbar = () => {
                     ))}
                 </div>
 
-                {/* 👤 User */}
+                {/* User */}
                 <div className='flex items-center'>
                     {session ? (
                         <Avatar
@@ -134,7 +134,7 @@ const Navbar = () => {
                         sx={{ width: 270 }}
                         className="bg-[#f5f5f5] h-full flex flex-col text-[#233D4C] dark:bg-neutral-800 dark:text-[#d6d6d6]"
                     >
-                        <div className="p-4 border-b border-gray-500">
+                        <div className="p-4 border-b border-gray-300 dark:border-gray-500">
                             <Link href={"/"}>
                                 <h1 className={`text-xl text-[#4a879c] md:text-2xl dark:text-[#f5f5f5]/90 ${font.className}`}>
                                     Case<span className='font-bold'>Vault</span>
@@ -171,7 +171,7 @@ const Navbar = () => {
                     </Box>
                 </Drawer>
 
-                {/* 👉 RIGHT Drawer (Profile) */}
+                {/* RIGHT Drawer (Profile) */}
                 <Drawer
                     anchor="right"
                     open={rightDrawerOpen}
@@ -179,11 +179,11 @@ const Navbar = () => {
                 >
                     <Box
                         sx={{ width: 270 }}
-                        className="bg-[#f5f5f5] h-full flex flex-col text-[#233D4C]"
+                        className="bg-[#f5f5f5] h-full flex flex-col text-[#233D4C] dark:bg-neutral-800 dark:text-[#d6d6d6]"
                     >
 
-                        {/* 👤 User Info */}
-                        <div className="p-4 border-b border-gray-300 flex items-center gap-3">
+                        {/* User Info */}
+                        <div className="p-4 border-b border-gray-300 flex items-center gap-3 dark:border-gray-500">
                             {session ? (
                                 <>
                                     <Avatar
@@ -204,7 +204,7 @@ const Navbar = () => {
                             )}
                         </div>
 
-                        {/* 📋 Same Links */}
+                        {/* Same Links */}
                         <List>
                             {naviLinks.map((item, index) => {
 
@@ -248,9 +248,9 @@ const Navbar = () => {
                                                 <ThemeDialog open={openTheme} onClose={() => setOpenTheme(false)}/>
                         </List>
 
-                        {/* 🚪 Logout */}
+                        {/* Logout */}
                         {session && (
-                            <div className="mt-auto p-4 border-t border-gray-300">
+                            <div className="mt-auto p-4 border-t border-gray-300 dark:border-gray-500">
                                 <div className='flex gap-3 items-center'>
                                     <Logout />
                                     <button

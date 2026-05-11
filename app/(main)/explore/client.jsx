@@ -165,16 +165,16 @@ const Client = ({ session }) => {
   }
 
   return (
-    <main className="min-h-dvh bg-[#f5f5f5]">
-      <div className="pt-10 pb-10 lg:pt-24 lg:pb-20 md:pt-20 md:pb-16 min-h-dvh px-2 md:px-6 max-md:text-sm">
+    <main className="min-h-dvh bg-[#f5f5f5] dark:bg-neutral-800">
+      <div className="pt-10 pb-10 lg:pt-24 lg:pb-20 md:pt-20 md:pb-16 min-h-dvh px-4 md:px-6 max-md:text-sm">
         <div className="max-w-7xl mx-auto">
 
           {/* Header */}
           <div className="mb-10 max-md:px-2">
-            <h1 className="text-4xl font-bold text-[#233D4C] max-md:text-3xl">
+            <h1 className="text-4xl font-bold text-[#233D4C] max-md:text-3xl dark:text-[#55fff6]/50">
               Explore Cases
             </h1>
-            <p className="text-[#000] mt-2">
+            <p className="text-[#000] mt-2 dark:text-[#f5f5f5]">
               Browse real-world cases shared by the community.
             </p>
           </div>
@@ -184,7 +184,7 @@ const Client = ({ session }) => {
             <input
               type="text"
               placeholder="Search cases..."
-              className="w-full md:w-1/2 border p-3 rounded-lg border-[#233D4C] text-[#233D4C] focus:outline-none focus:ring-1 focus:ring-[#55fff6]"
+              className="w-full md:w-1/2 border p-3 rounded-lg border-[#233D4C] text-[#233D4C] focus:outline-none focus:ring-1 focus:ring-[#55fff6] dark:border-gray-300 dark:placeholder-gray-300"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -197,7 +197,7 @@ const Client = ({ session }) => {
                 <button
                   key={cat}
                   className="px-3 py-2 rounded-full hover:bg-[#F97316] hover:text-[#0F172A] transition
-                  text-[#f5f5f5] md:px-4 bg-[#233D4C] duration-200 transition-all cursor-pointer"
+                  text-[#f5f5f5] md:px-4 bg-[#233D4C] duration-200 transition-all cursor-pointer dark:bg-[#55fff6]/60 dark:text-neutral-900"
                   onClick={() => setSearchTerm(cat === "All" ? "" : cat)}
                 >
                   {cat}
@@ -221,30 +221,30 @@ const Client = ({ session }) => {
                   </p>
                 ) : (
                   filteredCases.map(caseItem => (
-                    <div key={caseItem.id} className="rounded-xl p-3 md:p-5 md:pb-3 shadow-md lg:shadow-lg bg-white">
+                    <div key={caseItem.id} className="rounded-xl p-3 md:p-5 md:pb-3 shadow-md lg:shadow-lg bg-white dark:bg-neutral-900">
                       <div className='flex gap-3 md:gap-5 items-center mb-5'>
                         <Avatar alt={caseItem.name} src={caseItem.image} sx={{
                           width: { xs: 48, sm: 54, md: 60 },
                           height: { xs: 48, sm: 54, md: 60 },
                         }} className=' cursor-pointer ' />
                         <div>
-                          <div className={`mt-4 text-base md:text-lg text-[#233D4C] ${font.className}`}>
+                          <div className={`mt-4 text-base md:text-lg text-[#233D4C] dark:text-gray-200 ${font.className}`}>
                             {caseItem.author}
                           </div>
-                          <span className="md:text-sm text-gray-800 text-xs">
+                          <span className="md:text-sm text-gray-800 text-xs dark:text-gray-300">
                             {caseItem.category}
                           </span>
-                          <p className='text-xs text-yellow-800'>
+                          <p className='text-xs text-yellow-800 dark:text-yellow-600'>
                             Occurance Date: <span>{caseItem.date}</span>
                           </p>
                         </div>
                       </div>
 
-                      <h2 className="font-bold text-md md:text-lg text-yellow-700 mb-2 capitalize">
+                      <h2 className="font-bold text-md md:text-lg text-yellow-700 mb-2 capitalize dark:text-[#55fff6]/60">
                         {caseItem.title}
                       </h2>
 
-                      <p className="text-gray-900 text-md md:text-base italic mx-auto 
+                      <p className="text-gray-900 dark:text-gray-300 text-md md:text-base italic mx-auto 
                         overflow-hidden 
                         [display:-webkit-box] 
                         [-webkit-line-clamp:10] 
@@ -253,7 +253,7 @@ const Client = ({ session }) => {
                         {caseItem.description}
                       </p>
 
-                      <Link className='md:text-sm text-xs underline text-red-500' href={`/explore/${caseItem.id}`}>
+                      <Link className='md:text-sm text-xs underline text-red-500 dark:text-red-400' href={`/explore/${caseItem.id}`}>
                         Read more
                       </Link>
                       <div className="flex items-center justify-between mt-3">
@@ -266,21 +266,21 @@ const Client = ({ session }) => {
                               />
                             ) : (
                               <FaRegHeart
-                                className="cursor-pointer text-gray-800"
+                                className="cursor-pointer text-gray-800 dark:text-gray-300"
                                 onClick={() => toggleLike(caseItem.id)}
                               />
                             )}
-                            <span className="md:text-base text-sm text-gray-800">
+                            <span className="md:text-base text-sm text-gray-800 dark:text-gray-300">
                               {caseItem.likesCount || 0}
                             </span>
                           </p>
                           <div className="flex items-center gap-1">
                             <p className="md:text-lg text-gray-800 mt-[3px] cursor-pointer"><CommentsDrawer postId={caseItem.id} session={session} />
                             </p>
-                            <span  className="text-sm md:text-base text-gray-800">{caseItem.commentsCount || 0}</span>
+                            <span  className="text-sm md:text-base text-gray-800 dark:text-gray-300">{caseItem.commentsCount || 0}</span>
                           </div>
                         </div>
-                        <p className="text-xs font-semibold text-gray-500">
+                        <p className="text-xs font-semibold text-gray-500 dark:text-gray-400">
                           {timeAgo(caseItem.createdAt)}
                         </p>
                       </div>

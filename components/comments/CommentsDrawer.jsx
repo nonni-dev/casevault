@@ -10,7 +10,7 @@ export default function CommentsDrawer({ postId, session }) {
   return (
     <>
       {/* COMMENT BUTTON */}
-      <button onClick={() => setOpen(true)}>
+      <button onClick={() => setOpen(true)} className="dark:text-gray-300">
         <FaRegCommentDots />
       </button>
 
