@@ -209,7 +209,7 @@ const Client = ({ session }) => {
           {/* Case Cards */}
           {
             loading ?
-              <span className='flex items-center justify-center gap-1 md:mt-20 mt-10'>
+              <span className='flex items-center justify-center gap-1 md:mt-20 mt-10 dark:text-gray-300'>
                 <LuLoaderCircle className='text-xl animate-spin text-center' />
                 <p>loading...</p>
               </span>
